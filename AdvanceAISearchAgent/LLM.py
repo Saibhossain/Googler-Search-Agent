@@ -7,5 +7,3 @@ def ollama_generate(prompt: str, model: str = "gemma3:1b"):
         capture_output=True,
     )
     return result.stdout.decode()
-
-print(ollama_generate("tell me about averest"))
