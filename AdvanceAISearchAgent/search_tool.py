@@ -1,4 +1,3 @@
-# from duckduckgo_search import DDGS
 from ddgs import DDGS
 
 def search_duckduckgo(queary:str,num_reslts: int =5):
