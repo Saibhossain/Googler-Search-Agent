@@ -3,8 +3,6 @@ from typing import TypedDict
 from LLM import ollama_generate
 from search_tool import search_duckduckgo
 
-
-
 class AgentState(TypedDict, total=False):
     query: str
     search_results: str
@@ -27,15 +25,13 @@ def summarize_node(state: AgentState):
     state["final_answer"] = summary
     return state
 
-graph = StateGraph(AgentState)
-graph.add_node("Search",search_node)
-graph.add_node("Summarize",summarize_node)
+def build_search_agent():
+    graph = StateGraph(AgentState)
+    graph.add_node("Search", search_node)
+    graph.add_node("Summarize", summarize_node)
 
-graph.set_entry_point("Search")
-graph.add_edge("Search","Summarize")
-graph.add_edge("Summarize",END)
-agent = graph.compile()
+    graph.set_entry_point("Search")
+    graph.add_edge("Search", "Summarize")
+    graph.add_edge("Summarize", END)
 
-query = "Latest research on Bangla LLMs"
-result = agent.invoke({"query": query})
-print(result["final_answer"])
+    return graph.compile()
